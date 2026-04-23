@@ -16,6 +16,7 @@ import {
 import TocSidebar from './TocSidebar';
 import SearchBar from './SearchBar';
 import SearchHighlights from './SearchHighlights';
+import ThumbnailStrip from './ThumbnailStrip';
 import type { SearchHit } from '@/types/viewer';
 
 const ZOOM_MIN = 0.25;
@@ -292,6 +293,13 @@ export default function PDFViewer() {
           </div>
         </main>
       </div>
+
+      {/* 하단 썸네일 스트립 */}
+      <ThumbnailStrip
+        pages={manifest.pages}
+        currentPage={currentPage}
+        onPageSelect={goToPage}
+      />
     </div>
   );
 }
