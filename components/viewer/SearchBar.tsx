@@ -8,7 +8,7 @@ import type { SearchHit } from '@/types/viewer';
 interface SearchBarProps {
   onClose: () => void;
   onNavigate: (hit: SearchHit, index: number) => void;
-  onResultsChange: (hits: SearchHit[]) => void;
+  onResultsChange: (hits: SearchHit[], query: string) => void;
   currentPage: number;
 }
 
@@ -39,9 +39,9 @@ export default function SearchBar({
   useEffect(() => {
     if (prevHitsRef.current !== hits) {
       prevHitsRef.current = hits;
-      onResultsChange(hits);
+      onResultsChange(hits, debouncedQuery);
     }
-  }, [hits, onResultsChange]);
+  }, [hits, debouncedQuery, onResultsChange]);
 
   const hitIndex = useMemo(() => {
     if (totalHits === 0) return 0;

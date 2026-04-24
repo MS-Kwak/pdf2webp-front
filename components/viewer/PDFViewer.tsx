@@ -31,6 +31,7 @@ export default function PDFViewer() {
   const [zoom, setZoom] = useState(1);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchHits, setSearchHits] = useState<SearchHit[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentHitIndex, setCurrentHitIndex] = useState(-1);
   const mainRef = useRef<HTMLElement>(null);
 
@@ -71,8 +72,9 @@ export default function PDFViewer() {
   );
 
   const handleSearchResultsChange = useCallback(
-    (hits: SearchHit[]) => {
+    (hits: SearchHit[], query: string) => {
       setSearchHits(hits);
+      setSearchQuery(query);
       setCurrentHitIndex(hits.length > 0 ? 0 : -1);
     },
     [],
@@ -81,6 +83,7 @@ export default function PDFViewer() {
   const handleSearchClose = () => {
     setIsSearchOpen(false);
     setSearchHits([]);
+    setSearchQuery('');
     setCurrentHitIndex(-1);
   };
 
@@ -275,6 +278,7 @@ export default function PDFViewer() {
               hits={searchHits.filter(
                 (h) => h.pageNumber === currentPage,
               )}
+              query={searchQuery}
               currentHitIndex={
                 searchHits[currentHitIndex]?.pageNumber ===
                 currentPage
